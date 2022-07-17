@@ -26,10 +26,6 @@ Contar con una versión de R con la librería `olapR`. Descargar: [Microsoft R c
 devtools::install_github("jadm333/DGIScubes", ref = "main",dependencies = TRUE)
 ```
 
-```
-
-```
-
 # Ejemplos
 
 ```r
