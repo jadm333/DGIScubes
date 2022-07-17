@@ -34,17 +34,15 @@ library(DGIScubes)
 
 Para hacer la conexión a la base de datos SSAS/olapR requiere una cadena de conexión, existen diferentes servidores con SSAS dentro de los cubos de la DGIS, no se incluyen todas, la base de `pwidgis03` es la que contiene la mayor parte de los cubos.
 
-> Nota: se emiten urls y contraseñas en texto plano para evitar scrappeo automatizado, esto evita que no se sature la base de datos.
-
 La jerarquía de las bases de datos son las siguiente:
 
-Servidor(url) -> Databases -> Cubes
+Servidor(url) -> Base de datos -> Cubos
 
 ## Explorar los cubos
 
 ### Servidores
 
-Para listar las cadenas de conexión de los servidores:
+Mostrar las cadenas de conexión disponibles en la librería:
 
 ```r
 listConnectionStrings
@@ -54,6 +52,7 @@ listConnectionStrings
 #$reportesdgis
 #[1] "Data Source=<host>;Provider=MSOLAP;User ID=<User>;Password=<password>;Persist Security Info=True"
 ```
+> Nota: se omiten urls y contraseñas en texto plano para evitar scrappeo automatizado, esto evita que no se sature la base de datos.
 
 También puedes crear tu cadena de conexión con la función `connectionString`
 
@@ -64,7 +63,7 @@ connectionString(url="database.com", provider="MSOLAP", user_id="user" , passwor
 
 ### Bases de datos
 
-Para listar las bases de datos dentro de un servidor:
+Para mostrar las bases de datos dentro de un servidor:
 
 ```r
 listDBs("pwidgis03")  # <--- Return Dataframe
@@ -82,6 +81,15 @@ listDBs("pwidgis03")  # <--- Return Dataframe
 ```
 
 ### Cubos
+
+Mostrar los cubos disponibles dentro de una base de datos:
+```r
+listCubes("pwidgis03", "Egresos2022")
+#> CuboAfecciones2022
+#> CuboProcedimientos2022
+#> CuboProductos2022
+#> CubosEgresos2022
+```
 
 Seleccionar el cubo y explorarlo:
 
@@ -136,7 +144,7 @@ listMeasures(olap_con) # List available measures
 
 Para descargar datos existen dos opciones:
 
-Opción 1:
+Opción 1: Usar funciones auxiliares de `olapR`
 
 ```r
 library(DGIScubes)
@@ -161,7 +169,7 @@ df_results
 #> 18                                                                      Unknown                         NA                   NA
 ```
 
-Opción 2:
+Opción 2: Usar [MDX](https://docs.microsoft.com/en-us/analysis-services/multidimensional-models/mdx/mdx-query-the-basic-query?view=sql-analysis-services-2022), MDX es una especie de SQL para consultas a cubos. Ver [link](https://docs.microsoft.com/en-us/analysis-services/multidimensional-models/mdx/mdx-query-the-basic-query?view=sql-analysis-services-2022)
 
 ```r
 library(DGIScubes)
@@ -191,7 +199,7 @@ df_results
 
 ### Descargar cubo completo
 
-En la librería se incluye una función para tratar de bajar el cubo al nivel granular más posible, debido al poco conocimiento que tengo de la tecnología de SSAS y MDX (SQL para cubos) no aseguro que la función funcione para cualquier cubo. COnsiderar que hay cubos en la DGIS que superan los GB una vez descargados
+En la librería se incluye una función para tratar de bajar el cubo al nivel granular más posible, debido al poco conocimiento que tengo de la tecnología de SSAS y MDX no aseguro que la función funcione para cualquier cubo. COnsiderar que hay cubos en la DGIS que superan los GB una vez descargados
 
 ```r
 library(DGIScubes)
