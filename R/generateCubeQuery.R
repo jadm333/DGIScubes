@@ -18,7 +18,7 @@ generateCubeQuery = function(olap_con){
       << rows >>
     } ON ROWS
   FROM [<< cube_name >>]
-", .open = "<<", .close = ">>")
+  ", .open = "<<", .close = ">>")
 
   return(query)
 }

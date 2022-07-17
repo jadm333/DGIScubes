@@ -1,6 +1,6 @@
 listDBs = function(db){
   con_Str = listConnectionStrings[[db]]
-  print(con_Str)
+
   OLAP_connection <- olapR::OlapConnection(con_Str)
 
   query = "
